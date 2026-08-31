@@ -3,7 +3,7 @@
 ![Java Version](https://img.shields.io/badge/Java-14%2B-orange?style=flat-square&logo=openjdk)
 ![Course](https://img.shields.io/badge/Disciplina-POO-blue?style=flat-square)
 ![Institution](https://img.shields.io/badge/IFCE-Campus%20Maranguape-green?style=flat-square)
-![Current Version](https://img.shields.io/badge/Vers%C3%A3o-v0.2.0-informational?style=flat-square)
+![Current Version](https://img.shields.io/badge/Vers%C3%A3o-v0.3.0-informational?style=flat-square)
 
 ## 📌 Sobre o Repositório
 
@@ -13,82 +13,47 @@ O objetivo central é construir uma aplicação Java de forma **incremental e ev
 
 ---
 
-## 🎯 Versão Atual: `v0.2.0`
+## 🎯 Versão Atual: `v0.3.0`
 
 ### Finalidade Didática
-A versão **`v0.2.0`** introduz a transição de arrays de tamanho fixo para **coleções dinâmicas** com `List` e `ArrayList`. 
+A versão **`v0.3.0`** consolida o ciclo de operações fundamentais sobre coleções dinâmicas ao fechar o modelo **CRUD** (*Create, Read, Update, Delete*). 
 
-Nesta etapa, elimina-se a necessidade de definir uma capacidade máxima prévia para a agenda, permitindo o armazenamento flexível de contatos conforme a demanda. Além disso, a versão descontinua controles manuais que se tornaram obsoletos — como variáveis contadoras de elementos e algoritmos manuais de deslocamento de memória na exclusão.
+Ela introduz a funcionalidade de **Alterar Contato**, utilizando o método `.set()` para atualizar os dados de um registro pré-existente sem alterar sua posição na lista. Embora seja um avanço pontual, ele é conceitualmente estratégico para apresentar formalmente a manipulação completa de coleções em memória.
 
 ---
 
 ## 🛠️ Funcionalidades Implementadas
 
-- [x] **Adicionar Contato:** Insere um novo registro de forma dinâmica (sem limite rígido de capacidade).
-- [x] **Listar Todos os Contatos:** Percorre a lista exibindo todos os contatos cadastrados.
-- [x] **Procurar Contato:** Realiza busca linear por nome percorrendo a coleção.
-- [x] **Excluir Contato:** Remove o contato por índice e delega a reorganização dos elementos à própria lista.
+- [x] **Adicionar Contato (`CREATE`):** Insere um novo contato no final das listas.
+- [x] **Listar Todos os Contatos (`READ`):** Exibe todos os registros salvos na memória.
+- [x] **Procurar Contato (`READ`):** Realiza a busca de um contato por nome.
+- [x] **Alterar Contato (`UPDATE`) ⭐ *Novidade*:** Localiza um contato por nome e substitui suas informações via método `.set()`.
+- [x] **Excluir Contato (`DELETE`):** Remove o contato desejado mantendo a consistência dos índices.
 - [x] **Sair:** Finaliza o programa.
 
 ---
 
 ## 🧠 Conceitos de Programação Trabalhados
 
-Nesta versão, os alunos entram em contato com a API de Coleções do Java (*Java Collections Framework*):
+Nesta versão, encerra-se o bloco fundamental de estudos sobre a estrutura `ArrayList`:
 
-* **Interface e Implementação:** Uso da interface `java.util.List` com a implementação `java.util.ArrayList`.
-* **Gerenciamento Dinâmico de Memória:** Alocação de dados com crescimento e encolhimento automático.
-* **Manipulação de Coleções:**
-  * `.add()` — Adiciona um elemento ao final da lista.
-  * `.get(index)` — Recupera o elemento em uma posição específica.
-  * `.remove(index)` — Exclui o elemento e reorganiza os índices automaticamente.
-  * `.size()` — Retorna o número total de elementos armazenados.
-* **Análise Comparativa:** Avaliação prática das diferenças entre Arrays estáticos e `ArrayList`.
+* **Substituição por Índice:** Diferença conceitual e prática entre `.add()` (inserção de novos elementos) e `.set()` (atualização de elementos existentes).
+* **Mapeamento Posicional:** Busca de elementos mantendo a referência de seu índice para alterações cirúrgicas nas listas paralelas (`nomes`, `celulares`, `emails`).
+* **Tratamento de Exceções Lógicas:** Validação e feedback visual para cenários de "Contato não encontrado".
+* **Consolidação do Modelo CRUD:** Mapeamento direto das operações de software com métodos do *Java Collections Framework*.
 
 ---
 
-## 🔄 Comparativo: `v0.1.0` (Array) ➡️ `v0.2.0` (ArrayList)
+## 🔄 Visão do CRUD com `ArrayList`
 
-| Operação / Recurso | Array (`v0.1.0`) | ArrayList (`v0.2.0`) |
-| :--- | :--- | :--- |
-| **Instanciação** | `new String[capacidade]` | `new ArrayList<>()` |
-| **Capacidade** | Estática / Fixa | Dinâmica |
-| **Inserção** | `nomes[cont] = nome` | `nomes.add(nome)` |
-| **Acesso** | `nomes[i]` | `nomes.get(i)` |
-| **Contagem** | Variável manual (`quantidade`) | `nomes.size()` |
-| **Exclusão** | Deslocamento manual + ajuste final | `nomes.remove(i)` *(Automático)* |
-| **Validação de Limite** | Necessária (`quantidade == capacidade`) | Desnecessária |
+Com a introdução do método `.set()`, a sequência de aprendizado da estrutura `ArrayList` é finalizada:
 
----
+```plain
+V.0.2.0 (Fundamentos da Coleção)
+├── add()    ➡️  CREATE (Adicionar)
+├── get()    ➡️  READ (Consultar)
+├── remove() ➡️  DELETE (Excluir)
+└── size()   ➡️  Capacidade Dinâmica
 
-## 💡 Motivação para a Próxima Versão (`v0.3.0`)
-
-A versão `v0.2.0` já contempla três das quatro operações fundamentais de um **CRUD**: *Create* (adicionar), *Read* (listar/buscar) e *Delete* (excluir). A operação de **Update (atualizar/editar)** é o elo que falta para completar o ciclo basilar.
-
-> 🔍 **Reflexão para o futuro:** Atualmente, informações de um mesmo contato (como nome e telefone) continuam divididas em listas paralelas independentes. Esta limitação servirá como ponto de partida para a introdução da **Orientação a Objetos (Criação de Classes e Objetos)** nas etapas posteriores.
-
----
-
-## 🚀 Roadmap de Evolução do Projeto
-
-| Versão | Mecanismo de Armazenamento | Conceitos Aprendidos | Limitação / Evolução |
-| :---: | :--- | :--- | :--- |
-| **`v0.0.0`** | Variáveis Simples (`String`) | `Scanner`, `if-else`, `switch-case`, `while` | Armazena apenas 1 contato por vez. |
-| **`v0.1.0`** | Arrays (`String[]`) | Índices, tamanho fixo, controle por contador, laço `for` | Permite múltiplos contatos, porém com capacidade estática. |
-| **`v0.2.0`** *(Atual)* | `List` + `ArrayList` | Coleções dinâmicas, métodos `add()`, `get()`, `remove()`, `size()` | Armazenamento dinâmico sem limite estático. |
-| **`v0.3.0`** | `List` + `ArrayList` (Avançado) | Atualização de dados com `set()`, refatoração | Conclusão das quatro operações do **CRUD**. |
-
----
-
-## 💻 Como Executar
-
-### Pré-requisitos
-* **Java Development Kit (JDK) 14 ou superior** instalado (devido ao suporte à sintaxe moderna do `switch`).
-* Git para clonar o repositório (opcional).
-
-### Passo a Passo
-
-1. **Clone o repositório** (ou navegue até a pasta da versão):
-   ```bash
-   git clone [https://github.com/seu-usuario/agenda-contatos.git](https://github.com/seu-usuario/agenda-contatos.git)
-   cd agenda-contatos
+V.0.3.0 (Ciclo Completo)
+└── set()    ➡️  UPDATE (Alterar) ⭐
