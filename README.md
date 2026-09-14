@@ -1,59 +1,92 @@
-# 📇 Agenda de Contatos - *Projeto Didático em Java*
+# Agenda de Contatos - v1.0.0
 
-![Java Version](https://img.shields.io/badge/Java-14%2B-orange?style=flat-square&logo=openjdk)
-![Course](https://img.shields.io/badge/Disciplina-POO-blue?style=flat-square)
-![Institution](https://img.shields.io/badge/IFCE-Campus%20Maranguape-green?style=flat-square)
-![Current Version](https://img.shields.io/badge/Vers%C3%A3o-v0.3.0-informational?style=flat-square)
+## Sobre o Repositório
 
-## 📌 Sobre o Repositório
+Este repositório faz parte do projeto **Agenda de Contatos**, desenvolvido como material didático para a disciplina de **Programação Orientada a Objetos (POO)** do **4º semestre** do **Instituto Federal de Educação, Ciência e Tecnologia do Ceará - Campus Maranguape**.
 
-Este repositório faz parte do projeto **Agenda de Contatos**, desenvolvido como material didático e prático para a disciplina de **Programação Orientada a Objetos (POO)** do **4º semestre** do *Instituto Federal de Educação, Ciência e Tecnologia do Ceará (IFCE) — Campus Maranguape*.
+O objetivo principal é construir um projeto em Java desde a base, de forma incremental, permitindo acompanhar a evolução da aplicação e compreender na prática a necessidade de novas estruturas, técnicas e paradigmas de programação.
 
-O objetivo central é construir uma aplicação Java de forma **incremental e evolutiva**. Através dessa abordagem, o estudante acompanha na prática o surgimento de novos problemas de software e compreende a real necessidade de aplicar novas estruturas de dados, boas práticas e paradigmas da programação.
+## Versão Atual: v1.0.0
+
+### Finalidade
+A versão **v1.0.0** representa a primeira grande evolução arquitetural do projeto. Após dominar as operações de CRUD sobre coleções dinâmicas (`ArrayList`), esta versão introduz a **modularização do código** por meio de **métodos estáticos**. Todo o código que antes estava concentrado dentro do `main()` foi reorganizado em métodos especializados, cada um responsável por uma única funcionalidade da agenda.
+
+Essa mudança prepara o terreno para a transição definitiva para a **Programação Orientada a Objetos**, onde os métodos deixarão de ser estáticos e migrarão para uma classe `Contato` própria.
+
+### Funcionalidades
+- **Adicionar contato** — cadastra nome, celular e e-mail
+- **Listar contatos** — exibe todos os contatos cadastrados
+- **Procurar contato** — busca por nome (ignora maiúsculas/minúsculas)
+- **Alterar contato** — atualiza os dados de um contato existente
+- **Excluir contato** — remove um contato da agenda
+- **Sair** — encerra o programa
+
+### Conceitos Trabalhados
+- **Modularização** com métodos estáticos (`static`)
+- **Separação de responsabilidades** — cada método executa uma tarefa específica
+- **Passagem de parâmetros** (`Scanner`, `List<String>`)
+- **Retorno de valores** (`int`, `boolean`)
+- Reutilização de código (métodos reutilizáveis)
+- Organização e legibilidade do código
+- Manutenção do CRUD completo sobre `ArrayList`
+
+## Evolução do Projeto
+
+### O que mudou da V.0.3.0 para a v1.0.0?
+
+| Aspecto | V.0.3.0 | v1.0.0 |
+|:---|:---|:---|
+| **Arquitetura** | Todo o código dentro do `main()` | Código dividido em métodos especializados |
+| **Organização** | `switch` com blocos de código inline | `switch` chama métodos por nome |
+| **Reutilização** | Código repetido ou acoplado | Métodos reutilizáveis e independentes |
+| **Legibilidade** | Código extenso no `main()` | `main()` enxuto e descritivo |
+| **Manutenção** | Alterações afetam o `main()` | Alterações isoladas em métodos específicos |
+| **Paradigma** | Estruturado/procedural | Procedural modularizado |
+
+### Métodos Introduzidos
+
+| Método | Responsabilidade | Retorno |
+|:---|:---|:---|
+| `mostraInicializacao()` | Exibe o cabeçalho de boas-vindas | `void` |
+| `mostraMenu()` | Exibe as opções do menu | `void` |
+| `selecionaOpcao(Scanner)` | Lê e retorna a opção escolhida | `int` |
+| `adicionar(...)` | Cadastra um novo contato nas listas | `void` |
+| `listar(...)` | Exibe todos os contatos cadastrados | `void` |
+| `pesquisar(...)` | Busca e exibe um contato pelo nome | `void` |
+| `atualizar(...)` | Altera os dados de um contato existente | `void` |
+| `excluir(...)` | Remove um contato das listas | `void` |
+| `sair()` | Exibe mensagem de despedida e retorna `false` | `boolean` |
+
+### Motivação para Próximas Versões
+A v1.0.0 ainda utiliza **métodos estáticos** e mantém os dados de um contato separados em três `ArrayList`s distintos. A próxima evolução natural será a criação de uma **classe `Contato`**, que agrupará nome, celular e e-mail em um único objeto. Isso eliminará a necessidade de três listas paralelas e permitirá aplicar os pilares da POO:
+
+- **Encapsulamento** — atributos privados com getters e setters
+- **Construtores** — inicialização padronizada de objetos
+- **Coleção de objetos** — `List<Contato>` em vez de três `List<String>`
+- **Métodos de instância** — substituindo métodos estáticos
+
+| Versão | Armazenamento / Arquitetura | O que o aluno aprende | Limitação/Evolução |
+|:---|:---|:---|:---|
+| V.0.0.0 | Variáveis simples | String, Scanner, if-else, switch-case, repetição | Apenas 1 contato |
+| V.0.1.0 | Arrays | Vetores, índices, tamanho fixo e `for` | Capacidade fixa |
+| V.0.2.0 | List + ArrayList | Coleções dinâmicas: `add()`, `get()`, `remove()`, `size()` | Sem capacidade fixa |
+| V.0.3.0 | List + ArrayList | `set()` e CRUD completo | Código todo no `main()` |
+| **v1.0.0** | **List + ArrayList + Métodos estáticos** | **Modularização, separação de responsabilidades, passagem de parâmetros** | **Métodos estáticos; dados ainda em 3 listas paralelas** |
+| v1.1.0 (futura) | Classe `Contato` + encapsulamento | Orientação a Objetos: classe, atributos, métodos, construtor | — |
+
+## Como Executar
+
+1. Certifique-se de ter o **JDK 14+** instalado (devido ao uso do switch com `->`).
+2. Compile o arquivo:
+   ```bash
+   javac br/edu/principal/Principal.java
+   ```
+3. Execute o programa:
+   ```bash
+   java br.edu.principal.Principal
+   ```
 
 ---
-
-## 🎯 Versão Atual: `v0.3.0`
-
-### Finalidade Didática
-A versão **`v0.3.0`** consolida o ciclo de operações fundamentais sobre coleções dinâmicas ao fechar o modelo **CRUD** (*Create, Read, Update, Delete*). 
-
-Ela introduz a funcionalidade de **Alterar Contato**, utilizando o método `.set()` para atualizar os dados de um registro pré-existente sem alterar sua posição na lista. Embora seja um avanço pontual, ele é conceitualmente estratégico para apresentar formalmente a manipulação completa de coleções em memória.
-
----
-
-## 🛠️ Funcionalidades Implementadas
-
-- [x] **Adicionar Contato (`CREATE`):** Insere um novo contato no final das listas.
-- [x] **Listar Todos os Contatos (`READ`):** Exibe todos os registros salvos na memória.
-- [x] **Procurar Contato (`READ`):** Realiza a busca de um contato por nome.
-- [x] **Alterar Contato (`UPDATE`) ⭐ *Novidade*:** Localiza um contato por nome e substitui suas informações via método `.set()`.
-- [x] **Excluir Contato (`DELETE`):** Remove o contato desejado mantendo a consistência dos índices.
-- [x] **Sair:** Finaliza o programa.
-
----
-
-## 🧠 Conceitos de Programação Trabalhados
-
-Nesta versão, encerra-se o bloco fundamental de estudos sobre a estrutura `ArrayList`:
-
-* **Substituição por Índice:** Diferença conceitual e prática entre `.add()` (inserção de novos elementos) e `.set()` (atualização de elementos existentes).
-* **Mapeamento Posicional:** Busca de elementos mantendo a referência de seu índice para alterações cirúrgicas nas listas paralelas (`nomes`, `celulares`, `emails`).
-* **Tratamento de Exceções Lógicas:** Validação e feedback visual para cenários de "Contato não encontrado".
-* **Consolidação do Modelo CRUD:** Mapeamento direto das operações de software com métodos do *Java Collections Framework*.
-
----
-
-## 🔄 Visão do CRUD com `ArrayList`
-
-Com a introdução do método `.set()`, a sequência de aprendizado da estrutura `ArrayList` é finalizada:
-
-```plain
-V.0.2.0 (Fundamentos da Coleção)
-├── add()    ➡️  CREATE (Adicionar)
-├── get()    ➡️  READ (Consultar)
-├── remove() ➡️  DELETE (Excluir)
-└── size()   ➡️  Capacidade Dinâmica
-
-V.0.3.0 (Ciclo Completo)
-└── set()    ➡️  UPDATE (Alterar) ⭐
+**Professor:** Dr. Róger Moura Sarmento  
+**Instituição:** IFCE - Campus Maranguape  
+**Disciplina:** Programação Orientada a Objetos (POO) — 4º Semestre
