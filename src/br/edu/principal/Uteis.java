@@ -37,13 +37,6 @@ public class Uteis {
         return opc;
     }
 
-    public static boolean sair() {
-
-        System.out.println("Saindo da Agenda de Contatos...");
-
-        return false;
-    }
-
     public static void sobre() {
 
         JOptionPane.showMessageDialog(
