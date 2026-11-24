@@ -6,19 +6,19 @@
 
 ![Java](https://img.shields.io/badge/Java-17%2B-orange?style=flat-square&logo=openjdk)
 ![Instituição](https://img.shields.io/badge/IFCE-Campus%20Maranguape-green?style=flat-square)
-![Status](https://img.shields.io/badge/Versão%20Atual-v5.0.0%20(MVC%20%2B%20Controller%2FView)-blue?style=flat-square)
+![Status](https://img.shields.io/badge/Versão%20Atual-v5.1.0%20(MVC%20Completo%20View%20Loop)-blue?style=flat-square)
 
 ---
 
 ## 📌 Sobre o Projeto
 
-Sistema de gerenciamento de contatos em Java construído de forma **incremental**: cada versão parte da anterior e acrescenta um conceito novo, evoluindo de variáveis simples até **arquitetura MVC com Controller/View**, passando por coleções dinâmicas, modularização em classes dedicadas, persistência em arquivos, encapsulamento e organização em pacotes com DAO.
+Sistema de gerenciamento de contatos em Java construído de forma **incremental**: cada versão parte da anterior e acrescenta um conceito novo, evoluindo de variáveis simples até **MVC completo com View controlando o loop principal**, passando por coleções dinâmicas, modularização em classes dedicadas, persistência em arquivos, encapsulamento, organização em pacotes com DAO e separação Controller/View.
 
 Cada pasta `vX.Y.Z` deste repositório é uma versão completa e executável, acompanhada de seu próprio `README.md` individual, permitindo acompanhar visualmente a evolução do código a cada etapa do aprendizado.
 
 ---
 
-## ✨ Funcionalidades (v5.0.0)
+## ✨ Funcionalidades (v5.1.0)
 
 | Funcionalidade | O que faz | Onde fica |
 | :--- | :--- | :--- |
@@ -48,7 +48,8 @@ Cada pasta `vX.Y.Z` deste repositório é uma versão completa e executável, ac
 | **v3.2.0** | CRUD orientado a objetos | CRUD e persistência operando sobre `List<Contato>` |
 | **v3.3.0** | Encapsulamento | `private`, construtor parametrizado, `this`, getters e setters |
 | **v4.0.0** | DAO + Pacotes | `ContatoDAO`, pacotes `modelo/servico/dao/uteis`, imports, responsabilidade única |
-| **v5.0.0** ✅ | **MVC (Controller/View)** | `AgendaController`, `AgendaView`, `ContatoDAO` instância, injeção de dependência, confirmação exclusão |
+| **v5.0.0** | MVC (Controller/View) | `AgendaController`, `AgendaView`, `ContatoDAO` instância, injeção de dependência, confirmação exclusão |
+| **v5.1.0** ✅ | **MVC Completo (View Loop)** | View controla loop principal, `executar*()` delegam ao Controller, `Uteis` removido, `Principal` minimal |
 
 ---
 
@@ -78,6 +79,7 @@ Cada pasta `vX.Y.Z` deste repositório é uma versão completa e executável, ac
 ### 🔹 Fase Arquitetural
 * **v4.0.0 — DAO e Organização em Pacotes:** Código organizado em pacotes Java (`modelo`, `servico`, `dao`, `uteis`, `principal`); introdução do padrão DAO com `ContatoDAO` substituindo `Persistencia`; métodos static com try-with-resources; separação de responsabilidades via imports.
 * **v5.0.0 — MVC com Controller e View:** Separação completa da lógica de negócio (`AgendaController`) e interface (`AgendaView`); `ContatoDAO` passa a ser instância (não static) com caminho do arquivo configurável; injeção de dependência no `Principal`; confirmação antes de exclusão; métodos retornam `boolean` para indicar sucesso/falha.
+* **v5.1.0 — MVC Completo com View Loop:** View assume o loop principal (`iniciar()`); métodos `executar*()` na View delegam ao Controller; `Uteis` removido (inicialização/sobre/encerramento movidos para View); `Principal` torna-se composition root minimal (apenas injeta dependências e chama `view.iniciar()`).
 
 </details>
 
@@ -95,18 +97,19 @@ agenda_contatos/
 ├── v3.2.0/               # CRUD e persistência orientados a objetos
 ├── v3.3.0/               # Encapsulamento (private, construtor, get/set)
 ├── v4.0.0/               # DAO + organização em pacotes
-├── v5.0.0/               # Versão atual: MVC (Controller/View)
+├── v5.0.0/               # MVC (Controller/View)
+├── v5.1.0/               # Versão atual: MVC Completo (View Loop)
 └── README.md
 ```
 
 ---
 
-## 🏗️ Estrutura da Versão Atual (v5.0.0)
+## 🏗️ Estrutura da Versão Atual (v5.1.0)
 
 ### Organização dos Arquivos
 
 ```text
-v5.0.0/
+v5.1.0/
 ├── README.md
 └── src/
     └── br/
@@ -119,25 +122,22 @@ v5.0.0/
             │   └── AgendaController.java
             ├── visao/
             │   └── AgendaView.java
-            ├── dao/
-            │   └── ContatoDAO.java
-            └── uteis/
-                └── Uteis.java
+            └── dao/
+                └── ContatoDAO.java
 ```
 
 > **Nota:** O arquivo `contatos.txt` é gerado automaticamente pela aplicação ao ser encerrada, no diretório de execução.
 
-### Arquitetura das Classes (MVC)
+### Arquitetura das Classes (MVC Completo)
 
 ```text
-Principal  (inicializa dependências, injeta no Controller)
+Principal  (composition root: cria dependências, injeta, chama view.iniciar())
    │
-   ├── Uteis                    → inicialização, sair, sobre
-   ├── AgendaView (View)        → menus, leitura/escrita terminal, confirmação exclusão
-   ├── AgendaController (Ctrl)  → regras de negócio, CRUD, coordena DAO
-   └── ContatoDAO (Model/DAO)   → carregarContatos() · salvarContatos() (instância, caminho configurável)
-
-Contato  → entidade (modelo) usada por todas as camadas
+   ├── AgendaView (View)        → loop principal (iniciar), menus, executar*(), I/O terminal
+   │     └── AgendaController   → regras de negócio: CRUD, coordena DAO
+   │           └── ContatoDAO   → persistência arquivo (instância, caminho configurável)
+   │
+   └── Contato (Modelo)         → entidade usada por todas as camadas
 ```
 
 ### Divisão de Responsabilidades
@@ -146,18 +146,17 @@ Contato  → entidade (modelo) usada por todas as camadas
 | :--- | :--- | :--- |
 | `Contato` | `modelo` | Entidade com atributos privados, construtor parametrizado, getters e setters |
 | `AgendaController` | `controle` | Regras de negócio: adicionar, listar, pesquisar, atualizar, excluir, salvar |
-| `AgendaView` | `visao` | Interface terminal: menus, leitura de dados, exibição, confirmações |
+| `AgendaView` | `visao` | **Loop principal**, menus, leitura/escrita terminal, `executar*()` delegam ao Controller |
 | `ContatoDAO` | `dao` | Persistência em arquivo (`contatos.txt`), instância com caminho configurável |
-| `Uteis` | `uteis` | Mensagens de inicialização, saída e sobre |
-| `Principal` | `principal` | Composição das dependências, injeção no Controller, loop principal |
+| `Principal` | `principal` | **Composition root minimal**: cria dependências, injeta no Controller/View, chama `view.iniciar()` |
 
 ---
 
-## 🚀 Como Executar (v5.0.0)
+## 🚀 Como Executar (v5.1.0)
 
 1. **Compile as classes (da raiz do projeto):**
    ```bash
-   javac -d bin src/br/edu/modelo/Contato.java src/br/edu/dao/ContatoDAO.java src/br/edu/controle/AgendaController.java src/br/edu/visao/AgendaView.java src/br/edu/uteis/Uteis.java src/br/edu/principal/Principal.java
+   javac -d bin src/br/edu/modelo/Contato.java src/br/edu/dao/ContatoDAO.java src/br/edu/controle/AgendaController.java src/br/edu/visao/AgendaView.java src/br/edu/principal/Principal.java
    ```
 
 2. **Execute a aplicação:**
