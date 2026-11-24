@@ -1,15 +1,15 @@
 package br.edu.modelo;
 
 public class Contato {
-	
+
 	private String nome;
     private String celular;
     private String email;
-    
+
     public Contato() {
 
 	}
-	
+
     public Contato(String nome, String celular, String email) {
 		this.nome = nome;
 		this.celular = celular;
